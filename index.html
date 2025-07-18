@@ -1,7 +1,399 @@
 <!DOCTYPE html>
-<html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Valerio Comella – Portfolio</title>
+  
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+  <style>
+    /* Baseline */
+    body {
+      scroll-behavior: smooth;
+      transition: background-color 0.3s, color 0.3s;
+      background-color: #f8f9fa;
+      color: #212529;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    /* Dark Mode */
+    body.dark-mode {
+      background-color: #121212;
+      color: #e0e0e0;
+    }
+    body.dark-mode a {
+      color: #bb86fc;
+    }
+    body.dark-mode header, body.dark-mode footer {
+      background-color: #1f1f1f;
+      color: #e0e0e0;
+    }
+    body.dark-mode .card {
+      background-color: #1f1f1f;
+      color: #e0e0e0;
+      border-color: #333;
+    }
+    body.dark-mode .btn-outline-primary {
+      color: #bb86fc;
+      border-color: #bb86fc;
+    }
+    body.dark-mode .btn-outline-primary:hover {
+      background-color: #bb86fc;
+      color: #121212;
+    }
+
+    /* Hero */
+    .hero {
+      background: linear-gradient(135deg, #0d6efd, #6610f2);
+      color: white;
+      padding: 80px 20px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero h1 {
+      font-size: 3rem;
+      font-weight: 700;
+      animation: fadeInDown 1s ease forwards;
+    }
+    .hero p.lead {
+      font-size: 1.3rem;
+      margin-top: 1rem;
+      animation: fadeInUp 1.2s ease forwards;
+    }
+    .hero .btn {
+      margin-top: 2rem;
+      animation: fadeInUp 1.4s ease forwards;
+    }
+
+    /* Animazioni */
+    @keyframes fadeInDown {
+      from {opacity: 0; transform: translateY(-20px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+    @keyframes fadeInUp {
+      from {opacity: 0; transform: translateY(20px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+
+    /* Sezioni */
+    .section-title {
+      border-left: 4px solid #0d6efd;
+      padding-left: 12px;
+      margin-bottom: 1rem;
+      font-weight: 600;
+    }
+
+    /* Progetti */
+    .project-card {
+      transition: transform 0.3s;
+      cursor: default;
+    }
+    .project-card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    }
+
+    /* Immagine profilo */
+    .profile-pic {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid white;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+      margin-bottom: 1rem;
+      transition: transform 0.3s;
+    }
+    .profile-pic:hover {
+      transform: scale(1.1);
+    }
+
+    /* Footer */
+    footer {
+      background: #f8f9fa;
+      padding: 2rem 0;
+      text-align: center;
+      color: #666;
+    }
+    body.dark-mode footer {
+      background: #1f1f1f;
+      color: #aaa;
+    }
+
+    /* Toggle switch */
+    .form-switch {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 9999;
+      user-select: none;
+    }
+
+    /* Lingua toggle */
+    .lang-toggle {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 9999;
+      background: #0d6efd;
+      border: none;
+      color: white;
+      padding: 5px 12px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background-color 0.3s;
+    }
+    .lang-toggle:hover {
+      background: #0b5ed7;
+    }
+
+    /* Form contatti */
+    form .form-control:focus {
+      box-shadow: 0 0 5px #0d6efd;
+      border-color: #0d6efd;
+    }
+    .form-success {
+      margin-top: 1rem;
+      color: green;
+      font-weight: 600;
+    }
+    .form-error {
+      margin-top: 1rem;
+      color: red;
+      font-weight: 600;
+    }
+  </style>
+</head>
 <body>
-<h1>Hello World</h1>
-<p>I'm hosted with GitHub Pages.</p>
+
+  <!-- Dark Mode toggle -->
+  <div class="form-check form-switch">
+    <input class="form-check-input" type="checkbox" id="darkModeToggle" aria-label="Toggle dark mode" />
+    <label class="form-check-label" for="darkModeToggle">🌙</label>
+  </div>
+
+  <!-- Language toggle -->
+  <button class="lang-toggle" id="langToggle" aria-label="Toggle language">EN</button>
+
+  <!-- Hero section -->
+  <section class="hero text-center">
+    <img src="https://avatars.githubusercontent.com/u/583231?v=4" alt="Valerio Comella" class="profile-pic" id="profilePic" />
+    <h1 id="name">Valerio Comella</h1>
+    <p class="lead" id="role">Programmatore C# / Unity • Game Developer</p>
+    <button class="btn btn-light mt-3" onclick="scrollToSection('projectsSection')" id="btnProjects">Guarda i miei progetti</button>
+  </section>
+
+  <!-- Chi sono -->
+  <section class="container my-5">
+    <h2 class="section-title" id="aboutTitle">Chi sono</h2>
+    <p id="aboutText">Sono un game developer con esperienza nello sviluppo di giochi 2D e 3D in Unity. Studio presso ITS Academy LazioDigital e collaboro con Katabasi Studio. Amo trasformare idee in esperienze interattive.</p>
+  </section>
+
+  <!-- Progetti -->
+  <section class="container my-5" id="projectsSection">
+    <h2 class="section-title" id="projectsTitle">Progetti</h2>
+    <div class="row g-4">
+      <div class="col-md-6">
+        <div class="card shadow-sm project-card">
+          <img src="https://via.placeholder.com/600x300?text=Violinum" class="card-img-top" alt="Violinum screenshot" />
+          <div class="card-body">
+            <h5 class="card-title">Violinum</h5>
+            <p class="card-text">Un'avventura narrativa 3D in Unity, ambientata in un laboratorio di liuteria, che esplora temi come la memoria e l'identità.</p>
+            <a href="#" class="btn btn-outline-primary" tabindex="0">Scopri di più</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card shadow-sm project-card">
+          <img src="https://via.placeholder.com/600x300?text=Gamelingo" class="card-img-top" alt="Gamelingo screenshot" />
+          <div class="card-body">
+            <h5 class="card-title">Gamelingo</h5>
+            <p class="card-text">Un'app didattica per imparare il game development con esercizi interattivi e gamification. Pensata per chi vuole imparare giocando.</p>
+            <a href="#" class="btn btn-outline-primary" tabindex="0">Scopri di più</a>
+          </div>
+        </div>
+      </div>
+      <!-- Puoi aggiungere altri progetti qui -->
+    </div>
+  </section>
+
+  <!-- Contatti -->
+  <section class="container my-5">
+    <h2 class="section-title" id="contactsTitle">Contatti</h2>
+    <form id="contactForm" action="https://formspree.io/f/moqzpkwl" method="POST" class="mb-3" novalidate>
+      <div class="mb-3">
+        <label for="nameInput" class="form-label" id="labelName">Nome</label>
+        <input type="text" class="form-control" id="nameInput" name="name" required aria-required="true" />
+        <div class="invalid-feedback" id="nameFeedback">Per favore inserisci il tuo nome.</div>
+      </div>
+      <div class="mb-3">
+        <label for="emailInput" class="form-label" id="labelEmail">Email</label>
+        <input type="email" class="form-control" id="emailInput" name="_replyto" required aria-required="true" />
+        <div class="invalid-feedback" id="emailFeedback">Per favore inserisci una email valida.</div>
+      </div>
+      <div class="mb-3">
+        <label for="messageInput" class="form-label" id="labelMessage">Messaggio</label>
+        <textarea class="form-control" id="messageInput" name="message" rows="4" required aria-required="true"></textarea>
+        <div class="invalid-feedback" id="messageFeedback">Il messaggio non può essere vuoto.</div>
+      </div>
+      <button type="submit" class="btn btn-primary" id="btnSend">Invia</button>
+      <div id="formResponse" role="alert" aria-live="polite" style="margin-top: 1rem;"></div>
+    </form>
+    <ul class="list-unstyled">
+      <li><strong>Email:</strong> <a href="mailto:valerio@email.com" id="emailLink">valerio@email.com</a></li>
+      <li><strong>GitHub:</strong> <a href="https://github.com/valeriocomella" target="_blank" id="githubLink">valeriocomella</a></li>
+      <li><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/valerio-comella-6a5693241" target="_blank" id="linkedinLink">Valerio Comella</a></li>
+    </ul>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2025 Valerio Comella. Tutti i diritti riservati.</p>
+  </footer>
+
+  <!-- Bootstrap JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    // Dark Mode toggle
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    darkModeToggle.addEventListener('change', () => {
+      document.body.classList.toggle('dark-mode', darkModeToggle.checked);
+      localStorage.setItem('darkMode', darkModeToggle.checked);
+    });
+    // On load, check dark mode
+    if(localStorage.getItem('darkMode') === 'true'){
+      darkModeToggle.checked = true;
+      document.body.classList.add('dark-mode');
+    }
+
+    // Scroll to section helper
+    function scrollToSection(id){
+      document.getElementById(id).scrollIntoView({behavior:'smooth'});
+    }
+
+    // Contact form validation & submission via Formspree
+    const form = document.getElementById('contactForm');
+    const formResponse = document.getElementById('formResponse');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      formResponse.textContent = '';
+      formResponse.className = '';
+
+      // Simple validation
+      let valid = true;
+      ['nameInput','emailInput','messageInput'].forEach(id => {
+        const el = document.getElementById(id);
+        if(!el.value.trim()){
+          el.classList.add('is-invalid');
+          valid = false;
+        } else {
+          el.classList.remove('is-invalid');
+        }
+      });
+      // Email pattern
+      const email = document.getElementById('emailInput').value.trim();
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if(!emailPattern.test(email)){
+        document.getElementById('emailInput').classList.add('is-invalid');
+        valid = false;
+      }
+
+      if(!valid) return;
+
+      // Send form via fetch
+      const data = new FormData(form);
+      try {
+        const response = await fetch(form.action, {
+          method: 'POST',
+          body: data,
+          headers: {
+            'Accept': 'application/json'
+          }
+        });
+        if(response.ok){
+          formResponse.textContent = "Messaggio inviato con successo!";
+          formResponse.className = "form-success";
+          form.reset();
+        } else {
+          throw new Error('Errore durante l\'invio');
+        }
+      } catch(err) {
+        formResponse.textContent = "Si è verificato un errore, riprova più tardi.";
+        formResponse.className = "form-error";
+      }
+    });
+
+    // Language toggle (it/en)
+    const langToggle = document.getElementById('langToggle');
+    let currentLang = localStorage.getItem('lang') || 'it';
+
+    function setLanguage(lang){
+      currentLang = lang;
+      localStorage.setItem('lang', lang);
+      if(lang === 'en'){
+        // Traduzioni in inglese
+        document.documentElement.lang = 'en';
+        document.getElementById('name').textContent = 'Valerio Comella';
+        document.getElementById('role').textContent = 'C# / Unity Programmer • Game Developer';
+        document.getElementById('btnProjects').textContent = 'See my projects';
+        document.getElementById('aboutTitle').textContent = 'About me';
+        document.getElementById('aboutText').textContent = "I'm a game developer experienced in 2D and 3D games with Unity. Studying at ITS Academy LazioDigital and collaborating with Katabasi Studio. I love turning ideas into interactive experiences.";
+        document.getElementById('projectsTitle').textContent = 'Projects';
+        document.querySelectorAll('.card-title')[0].textContent = 'Violinum';
+        document.querySelectorAll('.card-text')[0].textContent = 'A 3D narrative adventure in Unity, set in a violin workshop exploring themes like memory and identity.';
+        document.querySelectorAll('.btn-outline-primary')[0].textContent = 'Learn more';
+        document.querySelectorAll('.card-title')[1].textContent = 'Gamelingo';
+        document.querySelectorAll('.card-text')[1].textContent = 'An educational app for learning game development through interactive exercises and gamification. Designed for those who want to learn by playing.';
+        document.querySelectorAll('.btn-outline-primary')[1].textContent = 'Learn more';
+        document.getElementById('contactsTitle').textContent = 'Contacts';
+        document.getElementById('labelName').textContent = 'Name';
+        document.getElementById('labelEmail').textContent = 'Email';
+        document.getElementById('labelMessage').textContent = 'Message';
+        document.getElementById('btnSend').textContent = 'Send';
+        document.getElementById('emailLink').textContent = 'valerio@email.com';
+        document.getElementById('githubLink').textContent = 'valeriocomella';
+        document.getElementById('linkedinLink').textContent = 'Valerio Comella';
+        langToggle.textContent = 'IT';
+      } else {
+        // Italiano
+        document.documentElement.lang = 'it';
+        document.getElementById('name').textContent = 'Valerio Comella';
+        document.getElementById('role').textContent = 'Programmatore C# / Unity • Game Developer';
+        document.getElementById('btnProjects').textContent = 'Guarda i miei progetti';
+        document.getElementById('aboutTitle').textContent = 'Chi sono';
+        document.getElementById('aboutText').textContent = 'Sono un game developer con esperienza nello sviluppo di giochi 2D e 3D in Unity. Studio presso ITS Academy LazioDigital e collaboro con Katabasi Studio. Amo trasformare idee in esperienze interattive.';
+        document.getElementById('projectsTitle').textContent = 'Progetti';
+        document.querySelectorAll('.card-title')[0].textContent = 'Violinum';
+        document.querySelectorAll('.card-text')[0].textContent = "Un'avventura narrativa 3D in Unity, ambientata in un laboratorio di liuteria, che esplora temi come la memoria e l'identità.";
+        document.querySelectorAll('.btn-outline-primary')[0].textContent = 'Scopri di più';
+        document.querySelectorAll('.card-title')[1].textContent = 'Gamelingo';
+        document.querySelectorAll('.card-text')[1].textContent = "Un'app didattica per imparare il game development con esercizi interattivi e gamification. Pensata per chi vuole imparare giocando.";
+        document.querySelectorAll('.btn-outline-primary')[1].textContent = 'Scopri di più';
+        document.getElementById('contactsTitle').textContent = 'Contatti';
+        document.getElementById('labelName').textContent = 'Nome';
+        document.getElementById('labelEmail').textContent = 'Email';
+        document.getElementById('labelMessage').textContent = 'Messaggio';
+        document.getElementById('btnSend').textContent = 'Invia';
+        document.getElementById('emailLink').textContent = 'valerio@email.com';
+        document.getElementById('githubLink').textContent = 'valeriocomella';
+        document.getElementById('linkedinLink').textContent = 'Valerio Comella';
+        langToggle.textContent = 'EN';
+      }
+    }
+
+    langToggle.addEventListener('click', () => {
+      setLanguage(currentLang === 'it' ? 'en' : 'it');
+    });
+
+    // Carica lingua salvata
+    setLanguage(currentLang);
+  </script>
+
 </body>
 </html>
